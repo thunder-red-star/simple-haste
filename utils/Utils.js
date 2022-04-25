@@ -38,7 +38,7 @@ module.exports = {
 		if (content.length > config.maxHasteLength) {
 			return {
 				success: false,
-				error: 'Haste content length exceeds the limit (' + config.maxHasteLength + ') set in config.'
+				error: 'Haste content length exceeds the limit (' + this.sizeToString(config.maxHasteLength) + ') set in config.'
 			};
 		}
 
@@ -82,7 +82,7 @@ module.exports = {
 		if (content.length > config.maxHasteLength) {
 			return {
 				success: false,
-				error: 'Haste content length exceeds the limit (' + config.maxHasteLength + ') set in config.'
+				error: 'Haste content length exceeds the limit (' + this.sizeToString(config.maxHasteLength) + ') set in config.'
 			};
 		}
 
@@ -289,8 +289,8 @@ module.exports = {
 
 		// Find the largest unit that the size is greater than or equal to.
 		let i = 0
-		while (size >= 1024) {
-			size /= 1024
+		while (size >= 1000) {
+			size /= 1000
 			i++
 		}
 

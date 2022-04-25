@@ -4,8 +4,8 @@ function sizeToString (size) {
 
 	// Find the largest unit that the size is greater than or equal to.
 	let i = 0
-	while (size >= 1024) {
-		size /= 1024
+	while (size >= 1000) {
+		size /= 1000
 		i++
 	}
 

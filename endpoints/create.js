@@ -26,7 +26,7 @@ module.exports = {
 			// Send error response
 			res.status(500).json({
 				success: false,
-				message: 'Error creating entry.',
+				message: 'Error creating entry: ' + entry.error,
 			});
 		}
 	}
