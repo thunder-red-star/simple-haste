@@ -1,0 +1,22 @@
+/*
+ header-left and header-right on same line within header div
+ */
+
+.header {
+  /* Kind of like a navbar */
+  background-color: #f1f1f1;
+  padding: 10px;
+  text-align: center;
+  font-size: 30px;
+  width: 100%;
+  position: fixed;
+}
+
+.header-left {
+  float: left;
+}
+
+.header-right {
+  float: right;
+}
+

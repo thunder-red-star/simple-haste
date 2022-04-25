@@ -12,7 +12,7 @@ let endpoints = fs.readdirSync('./endpoints');
 // Add all middleware
 app.use(bodyParser.json({ limit: "100mb" }))
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true, parameterLimit: 100000 }))
-
+app.use(express.static('public'));
 
 // Set view engine
 app.set('view engine', 'ejs');
