@@ -64,7 +64,7 @@ app.get('/code/:id', (req, res) => {
 		return Utils.renderTemplate(req, res, 'code', {
 			title: haste.name,
 			description: haste.description,
-			content: fs.readFileSync('./data/files/' + haste.name, 'utf8')
+			content: fs.readFileSync('./data/files/' + haste.haste.name, 'utf8')
 		});
 	}
 });
