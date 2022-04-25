@@ -80,6 +80,7 @@ app.get('/raw/:id', (req, res) => {
 		});
 	} else {
 		// If it succeeds, render the code page with the haste data
+		res.type('text/plain');
 		return res.send(fs.readFileSync('./data/files/' + haste.haste.name, 'utf8'));
 	}
 });
