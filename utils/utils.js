@@ -49,6 +49,9 @@ module.exports = {
 			};
 		}
 
+		let hastes = fs.readFileSync('./data/db.json', {encoding: 'utf8'});
+                hastes = JSON.parse(hastes);
+
 		// If there is a haste with the same name, set the new name to the old name + a number.
 		let newName = name;
 		let i = 1;
@@ -61,9 +64,6 @@ module.exports = {
 		fs.writeFileSync('./data/files/' + newName, content);
 
 		// Add the new haste to the hastes database.
-		let hastes = fs.readFileSync('./data/db.json', {encoding: 'utf8'});
-		hastes = JSON.parse(hastes);
-
 		hastes.files[newName] = {
 			name: newName,
 			id: this.newHasteId(),

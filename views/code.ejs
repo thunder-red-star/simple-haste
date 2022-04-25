@@ -1,7 +1,9 @@
 <!-- Include header from partials -->
-<%- include('partials/header.ejs', { name: name, title: "Home", description: "ThunderHaste: A simple Hastebin server." }) %>
+<%- include('partials/header.ejs', { name: name, title: title, description: description }) %>
 
-<h1>Nothing here yet</h1>
+<h1><%= title %></h1>
+<p><%= content %></p>
+<pre class="code"><%= content %></pre>
 
 <!-- Include footer -->
 <%- include('partials/footer.ejs', { totalCount: totalCount, totalSize: totalSize }) %>
