@@ -44,6 +44,11 @@ app.get('/', (req, res) => {
 	Utils.renderTemplate(req, res, 'index')
 });
 
+// Handle create page
+app.get('/create', (req, res) => {
+	Utils.renderTemplate(req, res, 'create')
+});
+
 // Start server
 app.listen(config.port, () => {
 	console.log('Server started on port ' + config.port);
