@@ -45,6 +45,7 @@ app.get('/', (req, res) => {
 	Utils.renderTemplate(req, res, 'index', {
 		mostRecentHasteName: mostRecentHaste.haste.name,
 		mostRecentHasteId: mostRecentHaste.haste.id,
+		mostRecentHasteDescription: mostRecentHaste.haste.description,
 		// Parse the haste time to a human readable format
 		mostRecentHasteTime: new Date(mostRecentHaste.haste.created).toLocaleString()
 	})
