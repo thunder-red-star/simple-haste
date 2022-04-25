@@ -78,3 +78,8 @@ footer {
   border-radius: 10px;
   font-family: monospace;
 }
+
+.header-home-link {
+  color: #444;
+  text-decoration: none;
+}
