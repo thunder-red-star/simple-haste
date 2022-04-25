@@ -1,13 +1,13 @@
 const fs = require('fs');
 const config = require('../config');
-
+const path = require('path');
 
 module.exports = {
 	// A collection of utility functions
 
 	// Create a new Haste ID unique from the other IDs.
 	// This is used to create unique IDs for the Haste components.
-	newHasteId: function() {
+	newHasteId: function () {
 		// Get the other hastes.
 		let hastes = fs.readFileSync('./data/db.json', {encoding: 'utf8'});
 		hastes = JSON.parse(hastes);
@@ -33,7 +33,7 @@ module.exports = {
 
 		return newID;
 	},
-	createNewHaste: function(name, description, content) {
+	createNewHaste: function (name, description, content) {
 		// Check if haste content length doesn't exceed the limit set in config.
 		if (content.length > config.maxHasteLength) {
 			return {
@@ -49,22 +49,35 @@ module.exports = {
 		let hastes = fs.readFileSync('./data/db.json', {encoding: 'utf8'});
 		hastes = JSON.parse(hastes);
 
-		hastes.files[name] = {
-			name: name,
+		// If there is a haste with the same name, set the new name to the old name + a number.
+		let newName = name;
+		let i = 1;
+		while (hastes.files[newName]) {
+			newName = name + " (" + i + ")";
+			i++;
+		}
+
+		hastes.files[newName] = {
+			name: newName,
 			id: this.newHasteId(),
 			created: new Date().getTime(),
 			updated: new Date().getTime(),
 			description: description,
 		};
 
-		fs.writeFileSync('./data/db.json', JSON.stringify(hastes));
+		// Get length of haste, and edit the total content length.
+		let hasteLength = content.length;
+		hastes.totalSize += hasteLength;
+		hastes.totalCount++;
+
+		fs.writeFileSync('./data/db.json', JSON.stringify(hastes, null, 2));
 
 		return {
 			success: true,
 			id: hastes.files[name].id
 		};
 	},
-	updateHaste: function(id, content) {
+	updateHaste: function (id, content) {
 		// Check if haste content length doesn't exceed the limit set in config.
 		if (content.length > config.maxHasteLength) {
 			return {
@@ -77,6 +90,7 @@ module.exports = {
 		let hastes = fs.readFileSync('./data/db.json', {encoding: 'utf8'});
 		hastes = JSON.parse(hastes);
 
+
 		// Check if the haste exists.
 		if (!hastes.files[id]) {
 			return {
@@ -85,18 +99,32 @@ module.exports = {
 			};
 		}
 
+		// If new haste content length is 0, return error message.
+		if (content.length === 0) {
+			return {
+				success: false,
+				error: 'New haste content length is 0, please use the delete function instead.'
+			};
+		}
+
+		// Get old haste content length.
+		let hasteLength = hastes.files[id].content.length;
+
 		// Update the haste.
 		hastes.files[id].content = content;
 		hastes.files[id].updated = new Date().getTime();
 
+		// Update the total content length.
+		hastes.totalSize += (content.length - hasteLength);
+
 		// Write the hastes database.
-		fs.writeFileSync('./data/db.json', JSON.stringify(hastes));
+		fs.writeFileSync('./data/db.json', JSON.stringify(hastes, null, 2));
 
 		return {
 			success: true
 		};
 	},
-	deleteHaste: function(id) {
+	deleteHaste: function (id) {
 		// Get the hastes database.
 		let hastes = fs.readFileSync('./data/db.json', {encoding: 'utf8'});
 		hastes = JSON.parse(hastes);
@@ -109,18 +137,25 @@ module.exports = {
 			};
 		}
 
+		// Get old haste content length.
+		let hasteLength = hastes.files[id].content.length;
+
 		// Delete the haste.
 		fs.unlinkSync('./data/files/' + hastes.files[id].name);
 		delete hastes.files[id];
 
+		// Update the total content length.
+		hastes.totalSize -= hasteLength;
+		hastes.totalCount--;
+
 		// Write the hastes database.
-		fs.writeFileSync('./data/db.json', JSON.stringify(hastes));
+		fs.writeFileSync('./data/db.json', JSON.stringify(hastes, null, 2));
 
 		return {
 			success: true
 		};
 	},
-	getHasteContentById: function(id) {
+	getHasteContentById: function (id) {
 		// Get the hastes database.
 		let hastes = fs.readFileSync('./data/db.json', {encoding: 'utf8'});
 		hastes = JSON.parse(hastes);
@@ -229,5 +264,47 @@ module.exports = {
 			success: true,
 			haste: haste
 		};
+	},
+	getTotalSize: function () {
+		let hastes = fs.readFileSync('./data/db.json', {encoding: 'utf8'});
+		hastes = JSON.parse(hastes);
+
+		return {
+			success: true,
+			totalSize: hastes.totalSize
+		};
+	},
+	getTotalCount: function () {
+		let hastes = fs.readFileSync('./data/db.json', {encoding: 'utf8'});
+		hastes = JSON.parse(hastes);
+
+		return {
+			success: true,
+			totalCount: hastes.totalCount
+		}
+	},
+	sizeToString: function (size) {
+		// Convert size to units of bytes, kilobytes, megabytes, and so on.
+		let sizeUnits = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"]
+
+		// Find the largest unit that the size is greater than or equal to.
+		let i = 0
+		while (size >= 1024) {
+			size /= 1024
+			i++
+		}
+
+		// Round the size to two decimal places.
+		size = Math.round(size * 100) / 100
+
+		// Return the size and the unit.
+		return size + " " + sizeUnits[i]
+	},
+	renderTemplate: function (req, res, template, data = {}) {
+		const baseData = {
+			totalCount: this.getTotalCount().totalCount,
+			totalSize: this.sizeToString(this.getTotalSize().totalSize),
+		};
+		res.render(path.resolve(`${config.templateDir}${path.sep}${template}`), Object.assign(baseData, data));
 	}
 }

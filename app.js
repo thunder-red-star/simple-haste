@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const ejs = require('ejs');
 const config = require('./config');
+const Utils = require('./utils/utils');
 
 // Read endpoints directory
 let endpoints = fs.readdirSync('./endpoints');
@@ -15,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Set view engine
 app.set('view engine', 'ejs');
 
-// Handle all endpoints
+// Handle all api endpoints
 for (let endpoint of endpoints) {
 	let endpointData = require('./endpoints/' + endpoint);
 	if (endpointData.data.method == "POST") {
@@ -36,6 +37,11 @@ for (let endpoint of endpoints) {
 		});
 	}
 }
+
+// Handle index page
+app.get('/', (req, res) => {
+	Utils.renderTemplate(req, res, 'index')
+});
 
 // Start server
 app.listen(config.port, () => {

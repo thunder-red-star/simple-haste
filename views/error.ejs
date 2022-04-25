@@ -1,0 +1,7 @@
+<!-- Include header from partials -->
+<%- include('partials/header.ejs', { title: errorId, description: error }) %>
+<h1>Error <%= errorId %></h1>
+<p><%= error %></p>
+<p>Error Id: <pre><%= errorId %></pre></p>
+<!-- Include footer -->
+<%- include('partials/footer.ejs') %>
