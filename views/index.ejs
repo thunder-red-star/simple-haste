@@ -1,6 +1,7 @@
 <!-- Include header from partials -->
 <%- include('partials/header.ejs', { name: name, title: "Home", description: "ThunderHaste: A simple Hastebin server." }) %>
 
+Most recent haste:
 <div class="container most-recent-haste">
     <h1>
         <a href="/code/<%= mostRecentHasteId %>"><%= mostRecentHasteName %></a>

@@ -83,3 +83,10 @@ footer {
   color: #444;
   text-decoration: none;
 }
+
+.most-recent-haste {
+  margin: 0 auto;
+  width: 50%;
+  min-width: 300px;
+  border: 1px solid #444;
+}
