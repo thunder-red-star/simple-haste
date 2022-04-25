@@ -1,9 +1,13 @@
 <!-- Include header from partials -->
 <%- include('partials/header.ejs', { name: name, title: "Create", description: "Create a haste." }) %>
 
+<script>
+    displayToast('<%= createStatus %>', '<%= createMessage %>');
+</script>
+
 <h1>Create a haste</h1>
 
-<form method="post" action="/api/create-form">
+<form method="post">
     <input type="text" name="name" placeholder="Name" class="name-input" />
     <textarea name="description" placeholder="Description" class="description-textarea"></textarea>
     <textarea name="content" placeholder="Content" class="content-textarea"></textarea>

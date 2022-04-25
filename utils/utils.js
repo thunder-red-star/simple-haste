@@ -42,6 +42,20 @@ module.exports = {
 			};
 		}
 
+		if (name.length > config.maxHasteTitleLength) {
+			return {
+				success: false,
+				error: 'Haste name length exceeds the limit (' + this.sizeToString(config.maxHasteTitleLength) + ') set in config.'
+			};
+		}
+
+		if (description.length > config.maxHasteDescriptionLength) {
+			return {
+				success: false,
+				error: 'Haste description length exceeds the limit (' + this.sizeToString(config.maxHasteDescriptionLength) + ') set in config.'
+			};
+		}
+
 		if (!name) {
 			return {
 				success: false,

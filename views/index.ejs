@@ -2,8 +2,8 @@
 <%- include('partials/header.ejs', { name: name, title: "Home", description: "ThunderHaste: A simple Hastebin server." }) %>
 
 <div class="index-container">
-    <h1>Welcome to ThunderHaste!</h1>
-    <p>ThunderHaste is a simple, fast, and secure Hastebin server.</p>
+    <h1>Welcome to <%= name %></h1>
+    <p><%= name %> is a simple, fast, and secure Hastebin server.</p>
     <h1>Most Recent Haste</h1>
     <div class="container most-recent-haste">
         <h1>

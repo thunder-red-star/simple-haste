@@ -53,7 +53,26 @@ app.get('/', (req, res) => {
 
 // Handle create page
 app.get('/create', (req, res) => {
-	Utils.renderTemplate(req, res, 'create')
+	Utils.renderTemplate(req, res, 'create', {
+		createStatus: "x",
+		createMessage: "x"
+	})
+});
+
+app.post('/create', (req, res) => {
+	// Create haste
+	let haste = Utils.createNewHaste(req.body.name, req.body.description, req.body.content);
+	// If haste was created successfully
+	if (haste.success) {
+		// Redirect to haste page
+		return res.redirect('/haste/' + haste.haste.id);
+	} else {
+		// Render create page with error message
+		Utils.renderTemplate(req, res, 'create', {
+			createStatus: "error",
+			createMessage: "Haste could not be created: " + haste.error
+		});
+	}
 });
 
 // Handle code pages
@@ -72,7 +91,9 @@ app.get('/code/:id', (req, res) => {
 			title: haste.haste.name,
 			description: haste.haste.description,
 			content: fs.readFileSync('./data/files/' + haste.haste.name, 'utf8'),
-			id: haste.haste.id
+			id: haste.haste.id,
+			createStatus: "success",
+			createMessage: "Haste loaded successfully"
 		});
 	}
 });
