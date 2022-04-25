@@ -4,8 +4,8 @@ const config = require('../config');
 module.exports = {
     data: {
         method: 'POST',
-        name: 'create',
-        description: 'Create a new haste entry',
+        name: 'create-form',
+        description: 'Create a new haste entry coming from the form.',
     },
     async execute (req, res) {
         // Get name and content from request body
