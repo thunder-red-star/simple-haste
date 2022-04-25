@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const ejs = require('ejs');
 const config = require('./config');
-const Utils = require('./utils/Utils');
+const Utils = require('./utils/utils');
 
 // Read endpoints directory
 let endpoints = fs.readdirSync('./endpoints');
