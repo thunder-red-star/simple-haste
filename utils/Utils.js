@@ -9,7 +9,7 @@ module.exports = {
 	// This is used to create unique IDs for the Haste components.
 	newHasteId: function() {
 		// Get the other hastes.
-		let hastes = fs.readFileSync('../data/db.json', {encoding: 'utf8'});
+		let hastes = fs.readFileSync('./data/db.json', {encoding: 'utf8'});
 		hastes = JSON.parse(hastes);
 
 		// Load all the IDs and dump to array.
@@ -33,7 +33,7 @@ module.exports = {
 
 		return newID;
 	},
-	createNewHaste: function(name, content) {
+	createNewHaste: function(name, description, content) {
 		// Check if haste content length doesn't exceed the limit set in config.
 		if (content.length > config.maxHasteLength) {
 			return {
@@ -43,21 +43,21 @@ module.exports = {
 		}
 
 		// Create a new file with the given name as filename and content as content.
-		fs.writeFileSync('../data/files/' + name, content);
+		fs.writeFileSync('./data/files/' + name, content);
 
 		// Add the new haste to the hastes database.
-		let hastes = fs.readFileSync('../data/db.json', {encoding: 'utf8'});
+		let hastes = fs.readFileSync('./data/db.json', {encoding: 'utf8'});
 		hastes = JSON.parse(hastes);
 
 		hastes.files[name] = {
 			name: name,
 			id: this.newHasteId(),
-			content: content,
 			created: new Date().getTime(),
-			updated: new Date().getTime()
+			updated: new Date().getTime(),
+			description: description,
 		};
 
-		fs.writeFileSync('../data/db.json', JSON.stringify(hastes));
+		fs.writeFileSync('./data/db.json', JSON.stringify(hastes));
 
 		return {
 			success: true,
@@ -74,7 +74,7 @@ module.exports = {
 		}
 
 		// Get the hastes database.
-		let hastes = fs.readFileSync('../data/db.json', {encoding: 'utf8'});
+		let hastes = fs.readFileSync('./data/db.json', {encoding: 'utf8'});
 		hastes = JSON.parse(hastes);
 
 		// Check if the haste exists.
@@ -90,7 +90,7 @@ module.exports = {
 		hastes.files[id].updated = new Date().getTime();
 
 		// Write the hastes database.
-		fs.writeFileSync('../data/db.json', JSON.stringify(hastes));
+		fs.writeFileSync('./data/db.json', JSON.stringify(hastes));
 
 		return {
 			success: true
@@ -98,7 +98,7 @@ module.exports = {
 	},
 	deleteHaste: function(id) {
 		// Get the hastes database.
-		let hastes = fs.readFileSync('../data/db.json', {encoding: 'utf8'});
+		let hastes = fs.readFileSync('./data/db.json', {encoding: 'utf8'});
 		hastes = JSON.parse(hastes);
 
 		// Check if the haste exists.
@@ -110,11 +110,11 @@ module.exports = {
 		}
 
 		// Delete the haste.
-		fs.unlinkSync('../data/files/' + hastes.files[id].name);
+		fs.unlinkSync('./data/files/' + hastes.files[id].name);
 		delete hastes.files[id];
 
 		// Write the hastes database.
-		fs.writeFileSync('../data/db.json', JSON.stringify(hastes));
+		fs.writeFileSync('./data/db.json', JSON.stringify(hastes));
 
 		return {
 			success: true
@@ -122,7 +122,7 @@ module.exports = {
 	},
 	getHasteContentById: function(id) {
 		// Get the hastes database.
-		let hastes = fs.readFileSync('../data/db.json', {encoding: 'utf8'});
+		let hastes = fs.readFileSync('./data/db.json', {encoding: 'utf8'});
 		hastes = JSON.parse(hastes);
 
 		let haste = null;
@@ -150,7 +150,7 @@ module.exports = {
 	},
 	getHasteContentByName: function (name) {
 		// Get the hastes database.
-		let hastes = fs.readFileSync('../data/db.json', {encoding: 'utf8'});
+		let hastes = fs.readFileSync('./data/db.json', {encoding: 'utf8'});
 		hastes = JSON.parse(hastes);
 
 		let haste = null;
@@ -178,7 +178,7 @@ module.exports = {
 	},
 	getHasteIdByName: function (name) {
 		// Get the hastes database.
-		let hastes = fs.readFileSync('../data/db.json', {encoding: 'utf8'});
+		let hastes = fs.readFileSync('./data/db.json', {encoding: 'utf8'});
 		hastes = JSON.parse(hastes);
 
 		let haste = null;
@@ -205,7 +205,7 @@ module.exports = {
 		};
 	},
 	getHasteById: function (id) {
-		let hastes = fs.readFileSync('../data/db.json', {encoding: 'utf8'});
+		let hastes = fs.readFileSync('./data/db.json', {encoding: 'utf8'});
 		hastes = JSON.parse(hastes);
 
 		let haste = null;

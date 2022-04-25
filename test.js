@@ -1,17 +1,11 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const Discord = require('discord.js');
+const Axios = require('axios');
 
-module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('servers')
-		.setDescription('Gets servers of bot.'),
-	async execute(interaction, client) {
-		const servers = interaction.client.guilds.cache
-		const embed = new Discord.MessageEmbed()
-			.setTitle('Servers')
-			.setDescription(servers.map(server => `${server.name} (${server.id})`).join('\n'));
-		interaction.reply({
-			embeds: [embed]
-		});
-	}
-};
+// Create a new Haste by POSTing to the Haste API
+
+(async () => {
+	let response = await Axios.post('http://localhost:3000/api/create', {
+		name: 'test2',
+		content: 'console.log("Hello World!");',
+	});
+	console.log(response.data);
+})();

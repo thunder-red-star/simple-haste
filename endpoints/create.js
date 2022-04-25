@@ -9,9 +9,25 @@ module.exports = {
 	},
 	async execute (req, res) {
 		// Get name and content from request body
-		const { name, content } = req.body;
+		const { name, description, content } = req.body;
 
 		// Create new entry
+		const entry = await Utils.createNewHaste(name, description, content);
 
+		// Check if successful
+		if (entry.success) {
+			// Send success response
+			res.status(200).json({
+				success: true,
+				message: 'Entry created successfully.',
+				id: entry.id,
+			});
+		} else {
+			// Send error response
+			res.status(500).json({
+				success: false,
+				message: 'Error creating entry.',
+			});
+		}
 	}
 }
