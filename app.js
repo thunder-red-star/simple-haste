@@ -54,7 +54,6 @@ app.get('/code/:id', (req, res) => {
 	// Try to fetch the Haste from the database by using Utils.getHasteById
 	// If it fails, return an error.
 	let haste = Utils.getHasteById(req.params.id);
-	console.log(haste);
 	if (haste.success == false) {
 		return Utils.renderTemplate(req, res, 'error', {
 			error: "Haste not found"
@@ -64,8 +63,24 @@ app.get('/code/:id', (req, res) => {
 		return Utils.renderTemplate(req, res, 'code', {
 			title: haste.haste.name,
 			description: haste.haste.description,
-			content: fs.readFileSync('./data/files/' + haste.haste.name, 'utf8')
+			content: fs.readFileSync('./data/files/' + haste.haste.name, 'utf8'),
+			id: haste.haste.id
 		});
+	}
+});
+
+// Handle code but just return the content
+app.get('/raw/:id', (req, res) => {
+	// Try to fetch the Haste from the database by using Utils.getHasteById
+	// If it fails, return an error.
+	let haste = Utils.getHasteById(req.params.id);
+	if (haste.success == false) {
+		return Utils.renderTemplate(req, res, 'error', {
+			error: "Haste not found"
+		});
+	} else {
+		// If it succeeds, render the code page with the haste data
+		return res.send(fs.readFileSync('./data/files/' + haste.haste.name, 'utf8'));
 	}
 });
 
