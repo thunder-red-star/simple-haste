@@ -1,7 +1,15 @@
 <!-- Include header from partials -->
 <%- include('partials/header.ejs', { name: name, title: "Home", description: "ThunderHaste: A simple Hastebin server." }) %>
 
-<h1>Hi! This is a placeholder.</h1>
+<div class="container most-recent-haste">
+    <h1>
+        <a href="/code/<%= mostRecentHasteId %>"><%= mostRecentHasteName %></a>
+    </h1>
+    <p>
+        <%= mostRecentHasteDescription %>
+    </p>
+    <sub><%= mostRecentHasteDate %></sub>
+</div>
 
 <!-- Include footer -->
 <%- include('partials/footer.ejs', { totalCount: totalCount, totalSize: totalSize }) %>

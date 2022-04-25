@@ -314,5 +314,33 @@ module.exports = {
 			name: config.name
 		};
 		res.render(path.resolve(`${config.templateDir}${path.sep}${template}`), Object.assign(baseData, data));
+	},
+	getMostRecentHaste: function () {
+		// Get the hastes database.
+		let hastes = fs.readFileSync('./data/db.json', {encoding: 'utf8'});
+		hastes = JSON.parse(hastes);
+
+		// Get the most recent haste by finding the highest created timestamp.
+		let mostRecentHaste = null;
+		let mostRecentTimestamp = 0;
+
+		for (let key in hastes.files) {
+			if (hastes.files[key].created > mostRecentTimestamp) {
+				mostRecentHaste = hastes.files[key];
+				mostRecentTimestamp = hastes.files[key].created;
+			}
+		}
+
+		if (!mostRecentHaste) {
+			return {
+				success: false,
+				error: 'No hastes exist.'
+			};
+		}
+
+		return {
+			success: true,
+			haste: mostRecentHaste
+		};
 	}
 }

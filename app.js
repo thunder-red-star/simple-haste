@@ -41,7 +41,13 @@ for (let endpoint of endpoints) {
 
 // Handle index page
 app.get('/', (req, res) => {
-	Utils.renderTemplate(req, res, 'index')
+	let mostRecentHaste = Utils.getMostRecentHaste();
+	Utils.renderTemplate(req, res, 'index', {
+		mostRecentHasteName: mostRecentHaste.haste.name,
+		mostRecentHasteId: mostRecentHaste.haste.id,
+		// Parse the haste time to a human readable format
+		mostRecentHasteTime: new Date(mostRecentHaste.haste.created).toLocaleString()
+	})
 });
 
 // Handle create page
