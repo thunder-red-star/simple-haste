@@ -47,7 +47,7 @@ app.get('/', (req, res) => {
 		mostRecentHasteId: mostRecentHaste.haste.id,
 		mostRecentHasteDescription: mostRecentHaste.haste.description,
 		// Parse the haste time to a human readable format
-		mostRecentHasteTime: new Date(mostRecentHaste.haste.created).toLocaleString()
+		mostRecentHasteTime: new Date(mostRecentHaste.haste.created).toString()
 	})
 });
 
@@ -63,7 +63,8 @@ app.get('/code/:id', (req, res) => {
 	let haste = Utils.getHasteById(req.params.id);
 	if (haste.success == false) {
 		return Utils.renderTemplate(req, res, 'error', {
-			error: "Haste not found"
+			error: "Haste not found",
+			errorCode: 404
 		});
 	} else {
 		// If it succeeds, render the code page with the haste data
