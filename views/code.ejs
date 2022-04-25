@@ -2,8 +2,8 @@
 <%- include('partials/header.ejs', { name: name, title: title, description: description }) %>
 
 <h1><%= title %></h1>
-<p><%= content %></p>
-<pre class="code"><%= content %></pre>
+<p><%= description %></p>
+<pre class="code-container"><%= content %></pre>
 
 <!-- Include footer -->
 <%- include('partials/footer.ejs', { totalCount: totalCount, totalSize: totalSize }) %>

@@ -62,8 +62,8 @@ app.get('/code/:id', (req, res) => {
 	} else {
 		// If it succeeds, render the code page with the haste data
 		return Utils.renderTemplate(req, res, 'code', {
-			title: haste.name,
-			description: haste.description,
+			title: haste.haste.name,
+			description: haste.haste.description,
 			content: fs.readFileSync('./data/files/' + haste.haste.name, 'utf8')
 		});
 	}
