@@ -1,15 +1,19 @@
 <!-- Include header from partials -->
 <%- include('partials/header.ejs', { name: name, title: "Home", description: "ThunderHaste: A simple Hastebin server." }) %>
 
-Most recent haste:
-<div class="container most-recent-haste">
-    <h1>
-        <a href="/code/<%= mostRecentHasteId %>"><%= mostRecentHasteName %></a>
-    </h1>
-    <p>
-        <%= mostRecentHasteDescription %>
-    </p>
-    <sub><%= mostRecentHasteTime %></sub>
+<div class="index-container">
+    <h1>Welcome to ThunderHaste!</h1>
+    <p>ThunderHaste is a simple, fast, and secure Hastebin server.</p>
+    <h1>Most Recent Haste</h1>
+    <div class="container most-recent-haste">
+        <h1>
+            <a href="/code/<%= mostRecentHasteId %>"><%= mostRecentHasteName %></a>
+        </h1>
+        <p>
+            <%= mostRecentHasteDescription %>
+        </p>
+        <sub><%= mostRecentHasteTime %></sub>
+    </div>
 </div>
 
 <!-- Include footer -->

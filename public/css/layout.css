@@ -86,7 +86,13 @@ footer {
 
 .most-recent-haste {
   margin: 0 auto;
-  width: 50%;
+  width: 100%;
   min-width: 300px;
   border: 1px solid #444;
+}
+
+.index-container {
+  margin: 0 auto;
+  width: 50%;
+  min-width: 300px;
 }
