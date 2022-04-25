@@ -1,0 +1,14 @@
+<!-- Include header from partials -->
+<%- include('partials/header.ejs', { name: name, title: "Create", description: "Create a haste." }) %>
+
+<h1>Create a haste</h1>
+
+<form method="post" action="/api/create">
+    <input type="text" name="name" placeholder="Name" class="name-input" />
+    <textarea name="description" placeholder="Description" class="description-textarea"></textarea>
+    <textarea name="content" placeholder="Content" class="content-textarea"></textarea>
+    <button class="button button-primary" type="submit">Create</button>
+</form>
+
+<!-- Include footer -->
+<%- include('partials/footer.ejs', { totalCount: totalCount, totalSize: totalSize }) %>

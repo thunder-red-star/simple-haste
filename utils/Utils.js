@@ -42,6 +42,13 @@ module.exports = {
 			};
 		}
 
+		if (!name) {
+			return {
+				success: false,
+				error: 'Haste name is empty.'
+			};
+		}
+
 		// Create a new file with the given name as filename and content as content.
 		fs.writeFileSync('./data/files/' + name, content);
 
@@ -304,6 +311,7 @@ module.exports = {
 		const baseData = {
 			totalCount: this.getTotalCount().totalCount,
 			totalSize: this.sizeToString(this.getTotalSize().totalSize),
+			name: config.name
 		};
 		res.render(path.resolve(`${config.templateDir}${path.sep}${template}`), Object.assign(baseData, data));
 	}

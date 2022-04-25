@@ -1,25 +1,24 @@
 <html>
 <head>
     <!-- Set title -->
-    <title>{{title}}</title>
+    <title><%= title %></title>
     <!-- Set meta charset -->
     <meta charset="utf-8">
     <!-- Set meta tags -->
-    <meta name="description" content="{{description}}">
-    <meta name="keywords" content="{{keywords}}">
+    <meta name="description" content="<%= description %>">
     <!-- Set meta author -->
-    <meta name="author" content="{{author}}">
+
     <!-- Set OG meta tags -->
-    <meta property="og:title" content="{{title}}">
-    <meta property="og:description" content="{{description}}">
-    <meta property="og:image" content="{{image}}">
-    <meta property="og:url" content="{{url}}">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="<%= description %>">
     <!-- Set viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Set favicon -->
     <link rel="shortcut icon" href="/img/favicon.png">
     <!-- Load styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/buttons-light.css">
+    <link rel="stylesheet" href="/css/colors-light.css">
     <!-- Load all scripts -->
     <script src="/js/sizeToString.js"></script>
 </head>
@@ -27,9 +26,12 @@
 <!-- A div with the name of the website on the left, and a link to the creation page on the right, both on the same line -->
 <div class="header">
     <div class="header-left">
-        <p>{{name}}</p>
+        <p class="header-item"><%= name %></p>
     </div>
     <div class="header-right">
-        <a href="/create">Create</a>
+        <p class="header-item"><a href="/create">Create</a></p>
     </div>
+    <!-- Hacky but it works -->
+    <div style="clear:both"></div>
 </div>
+<div class="content container">
